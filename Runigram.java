@@ -147,24 +147,18 @@ public class Runigram {
 	 */
 	public static Color[][] scaled(Color[][] image, int width, int height) {
 		
-		int originalWidth = image.length;
-		int originalHeight = image[0].length;
-	
-		// Calculate scale ratio
-		double widthR = (double) width / originalWidth;
-		double heightR = (double) height / originalHeight;
-	
-		Color[][] newImage = new Color[width][height];
-	
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				double originalW =  (i / widthR); // Calculate the new index for the pixels
-				double originalH =  (j / heightR);
-	
-				newImage[i][j] = image[(int)originalW][(int)originalH];
-			}
-		}
-		return newImage;
+		int originalHeight = image.length;
+        int originalWidth = image[0].length;
+        Color[][] scaledImage = new Color[height][width];
+    
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                int y = (int) Math.min(originalHeight - 1, Math.floor((double) i * originalHeight / height));
+                int x = (int) Math.min(originalWidth - 1, Math.floor((double) j * originalWidth / width));
+                scaledImage[i][j] = image[y][x];
+            }
+        }
+		return scaledImage;
 	}
 	
 	/**
@@ -249,15 +243,16 @@ public class Runigram {
 			   StdDraw.pause(100);
 		   }
 	}
+
 	
 	/** Creates a canvas for the given image. */
 	public static void setCanvas(Color[][] image) {
 		StdDraw.setTitle("Runigram 2023");
 		int height = image.length;
 		int width = image[0].length;
-		StdDraw.setCanvasSize(width, height);
+		StdDraw.setCanvasSize(width, height); //here
 		StdDraw.setXscale(0, width);
-		StdDraw.setYscale(0, height);
+		StdDraw.setYscale(0, height); 
         // Enables drawing graphics in memory and showing it on the screen only when
 		// the StdDraw.show function is called.
 		StdDraw.enableDoubleBuffering();
