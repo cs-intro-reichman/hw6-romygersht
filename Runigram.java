@@ -158,10 +158,10 @@ public class Runigram {
 	
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				int originalW = (int) (i / widthR); // Calculate the new index for the pixels
-				int originalH = (int) (j / heightR);
+				double originalW =  (i / widthR); // Calculate the new index for the pixels
+				double originalH =  (j / heightR);
 	
-				newImage[i][j] = image[originalW][originalH];
+				newImage[i][j] = image[(int)originalW][(int)originalH];
 			}
 		}
 		return newImage;
