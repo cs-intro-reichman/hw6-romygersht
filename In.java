@@ -13,7 +13,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.net.Socket;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -177,7 +180,11 @@ public final class In {
 
             // or URL from web
             if (url == null) {
-                url = new URL(name);
+               try {
+    url = new URI(name).toURL();
+} catch (URISyntaxException | MalformedURLException e) {
+    throw new IllegalArgumentException("Invalid URL: " + name, e);
+}
             }
 
             URLConnection site = url.openConnection();
